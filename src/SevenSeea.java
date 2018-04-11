@@ -76,6 +76,7 @@ public class SevenSeea {
         int nextX = player.getX() + dx;
         int nextY = player.getY() + dy;
 
+
         int nextEx = player.getX() + nextShotX;
         int nextEy = player.getY() + nextShotY;
 
@@ -90,22 +91,33 @@ public class SevenSeea {
             return;
         }
 
-        if (nextEPosition.equalsIgnoreCase("E")) {
-            for(Enemy enemy :enemies){
+
+
+         for(Enemy enemy :enemies){
                 if(enemy.match(nextEx,nextEy)){
                     System.out.println("Ban da bat chet Enemy");
-                    map.setCellAt(nextEx, nextEy, "- ");
+                    map.setCellAt(nextEx, nextEy, "-");
                     enemies.remove(enemy);
+                }else {
+                    int nextEnemyX = enemy.getX() - dx;
+                    int nextEnemyY = enemy.getY() - dy;
+                    if (!map.isValid(nextEnemyX, nextEnemyY)) return;
+                    map.setCellAt(enemy.getX(), enemy.getY(), "-");
+
+                    enemy.setY(nextEnemyX);
+                    enemy.setY(nextEnemyY);
+
+                    map.setCellAt(nextEnemyX, nextEnemyY, "E");
                 }
             }
-        }
 
 
 
         player.setX(nextX);
         player.setY(nextY);
-    }
 
+
+    }
 
     }
 
